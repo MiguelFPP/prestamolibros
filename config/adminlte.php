@@ -270,6 +270,12 @@ return [
                     'active' => ['category*'],
                     'icon' => 'fas fa-list-ul',
                 ],
+                [
+                    'text' => 'Libros',
+                    'route'  => 'books.index',
+                    'active' => ['book*'],
+                    'icon' => 'fas fa-book',
+                ],
             ],
         ],
         [
