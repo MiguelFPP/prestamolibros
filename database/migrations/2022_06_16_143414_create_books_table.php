@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
