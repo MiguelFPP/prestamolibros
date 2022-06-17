@@ -255,6 +255,24 @@ return [
         ],
         ['header' => 'account_settings'],
         [
+            'text'    => 'Gestion de Libros',
+            'icon'    => 'fas fa-book',
+            'submenu' => [
+                [
+                    'text' => 'Autores',
+                    'route'  => 'authors.index',
+                    'active' => ['author*'],
+                    'icon' => 'fas fa-user-tie',
+                ],
+                [
+                    'text' => 'Categorias',
+                    'route'  => 'categories.index',
+                    'active' => ['category*'],
+                    'icon' => 'fas fa-list-ul',
+                ],
+            ],
+        ],
+        [
             'text' => 'profile',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
