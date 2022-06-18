@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,30 +33,40 @@ Route::get('/home', function () {
 
 /* grupo de rutas author */
 Route::prefix('author')->group(function () {
-    Route::get('/', [App\Http\Controllers\AuthorController::class, 'index'])->name('authors.index');
-    Route::get('/create', [App\Http\Controllers\AuthorController::class, 'create'])->name('authors.create');
-    Route::post('/store', [App\Http\Controllers\AuthorController::class, 'store'])->name('authors.store');
-    Route::put('/{author}', [App\Http\Controllers\AuthorController::class, 'update'])->name('authors.update');
-    Route::get('/{author}/edit', [App\Http\Controllers\AuthorController::class, 'edit'])->name('authors.edit');
-    Route::delete('/{author}', [App\Http\Controllers\AuthorController::class, 'destroy'])->name('authors.destroy');
+    Route::get('/', [AuthorController::class, 'index'])->name('authors.index');
+    Route::get('/create', [AuthorController::class, 'create'])->name('authors.create');
+    Route::post('/store', [AuthorController::class, 'store'])->name('authors.store');
+    Route::put('/{author}', [AuthorController::class, 'update'])->name('authors.update');
+    Route::get('/{author}/edit', [AuthorController::class, 'edit'])->name('authors.edit');
+    Route::delete('/{author}', [AuthorController::class, 'destroy'])->name('authors.destroy');
 });
 
 /* grupo de rutas category */
 Route::prefix('category')->group(function () {
-    Route::get('/', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('categories.create');
-    Route::post('/store', [App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
-    Route::put('/{category}', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
-    Route::get('/{category}/edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
-    Route::delete('/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
 /* grupo de rutas book */
 Route::prefix('book')->group(function () {
-    Route::get('/', [App\Http\Controllers\BookController::class, 'index'])->name('books.index');
-    Route::get('/create', [App\Http\Controllers\BookController::class, 'create'])->name('books.create');
-    Route::post('/store', [App\Http\Controllers\BookController::class, 'store'])->name('books.store');
-    Route::put('/{book}', [App\Http\Controllers\BookController::class, 'update'])->name('books.update');
-    Route::get('/{book}/edit', [App\Http\Controllers\BookController::class, 'edit'])->name('books.edit');
-    Route::delete('/{book}', [App\Http\Controllers\BookController::class, 'destroy'])->name('books.destroy');
+    Route::get('/', [BookController::class, 'index'])->name('books.index');
+    Route::get('/create', [BookController::class, 'create'])->name('books.create');
+    Route::post('/store', [BookController::class, 'store'])->name('books.store');
+    Route::put('/{book}', [BookController::class, 'update'])->name('books.update');
+    Route::get('/{book}/edit', [BookController::class, 'edit'])->name('books.edit');
+    Route::delete('/{book}', [BookController::class, 'destroy'])->name('books.destroy');
+});
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/user',[UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/user/create',[UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/user/store',[UserController::class, 'store'])->name('admin.users.store');
+    Route::put('/user/{user}',[UserController::class, 'update'])->name('admin.users.update');
+    Route::get('/user/{user}/edit',[UserController::class, 'edit'])->name('admin.users.edit');
+    Route::delete('/user/{user}',[UserController::class, 'destroy'])->name('admin.users.destroy');
 });

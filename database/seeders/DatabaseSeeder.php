@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use phpDocumentor\Reflection\Types\This;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(1)->create();
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
 
         Author::factory(15)->create();
         Category::factory(10)->create();

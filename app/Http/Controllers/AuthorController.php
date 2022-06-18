@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('verified');
+        $this->middleware('can:authors.index')->only('index');
+        $this->middleware('can:authors.create')->only('create');
+        $this->middleware('can:authors.store')->only('store');
+        $this->middleware('can:authors.edit')->only('edit');
+        $this->middleware('can:authors.update')->only('update');
+        $this->middleware('can:authors.destroy')->only('destroy');
+    }
+
     public function index()
     {
         $authors = Author::orderBy('id', 'desc')->paginate(5);
