@@ -22,25 +22,32 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'home'])->syncRoles([$role1, $role2]);
 
-        Permission::create(['name'=>'authors.index'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'authors.create'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'authors.store'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'authors.edit'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'authors.update'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'authors.destroy'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'authors.index'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'authors.create'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'authors.store'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'authors.edit'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'authors.update'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'authors.destroy'])->syncRoles([$role1, $role2]);
 
-        Permission::create(['name'=>'categories.index'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'categories.create'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'categories.store'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'categories.edit'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'categories.update'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'categories.destroy'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'categories.index'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'categories.create'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'categories.store'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'categories.edit'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'categories.update'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'categories.destroy'])->syncRoles([$role1, $role2]);
 
-        Permission::create(['name'=>'books.index'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'books.create'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'books.store'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'books.edit'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'books.update'])->syncRoles([$role1, $role2]);
-        Permission::create(['name'=>'books.destroy'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'books.index'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'books.create'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'books.store'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'books.edit'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'books.update'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'books.destroy'])->syncRoles([$role1, $role2]);
+
+        Permission::create(['name' => 'admin.users.index'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.users.create'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.users.store'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.users.edit'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.users.update'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.users.destroy'])->syncRoles([$role1]);
     }
 }
