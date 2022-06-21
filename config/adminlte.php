@@ -286,7 +286,7 @@ return [
             'route'  => 'admin.users.index',
             'active' => ['admin/user*'],
             'icon' => 'fas fa-fw fa-users',
-            'can' => 'admin.users.index',
+            'can' => 'users.index',
         ],
         [
             'text' => 'profile',

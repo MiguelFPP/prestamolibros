@@ -12,26 +12,57 @@ use Spatie\Permission\Contracts\Role;
 
 class UserController extends Controller
 {
-    /**
-     * It gets all the users except the logged in user and orders them by id in descending order.
-     *
-     * @return A collection of users that are not the current user, with their roles, ordered by id
-     * descending, and paginated.
-     */
-    public function index()
+    public function __construct()
     {
-        $users = User::where('id', '!=', auth()->id())->with('roles:name')->orderBy('id', 'desc')->paginate(6);
-        return view('admin.users.index', compact('users'));
+        $this->middleware('auth');
+        $this->middleware('verified');
+        $this->middleware('can:users.index')->only('index');
+        $this->middleware('can:users.create')->only('create');
+        $this->middleware('can:users.store')->only('store');
+        $this->middleware('can:users.edit')->only('edit');
+        $this->middleware('can:users.update')->only('update');
+        $this->middleware('can:users.destroy')->only('destroy');
     }
 
     /**
-     * It creates a new user.
+     * If the user is an admin, show all users, otherwise show all users except admins
      *
-     * @return A view called 'admin.users.create' with the variable
+     * @return A view with the users
+     */
+    public function index()
+    {
+        if (auth()->user()->hasRole('admin')) {
+            $users = User::where('id', '!=', auth()->id())
+                ->with('roles:name')
+                ->orderBy('id', 'desc')
+                ->paginate(6);
+        } else {
+            $users = User::where('id', '!=', auth()->id())
+                ->with('roles:name')
+                ->whereHas('roles', function ($query) {
+                    $query->where('name', '!=', 'admin');
+                })
+                ->orderBy('id', 'desc')
+                ->paginate(6);
+        }
+
+        return view('admin.users.index', compact('users'));
+    }
+
+
+    /**
+     * If the user is an admin, show all roles. If the user is not an admin, show all roles except
+     * admin
+     *
+     * @return A view with the roles
      */
     public function create()
     {
-        $roles = \Spatie\Permission\Models\Role::all();
+        if (auth()->user()->hasRole('admin')) {
+            $roles = \Spatie\Permission\Models\Role::all();
+        } else {
+            $roles = \Spatie\Permission\Models\Role::where('name', '!=', 'admin')->get();
+        }
         return view('admin.users.create', compact('roles'));
     }
 
@@ -80,7 +111,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = \Spatie\Permission\Models\Role::all();
+        if (auth()->user()->hasRole('admin')) {
+            $roles = \Spatie\Permission\Models\Role::all();
+        } else {
+            $roles = \Spatie\Permission\Models\Role::where('name', '!=', 'admin')->get();
+        }
 
         $userRoles = $user->roles->pluck('name')->toArray();
 
