@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,4 +70,21 @@ Route::prefix('admin')->group(function () {
     Route::put('/user/{user}',[UserController::class, 'update'])->name('admin.users.update');
     Route::get('/user/{user}/edit',[UserController::class, 'edit'])->name('admin.users.edit');
     Route::delete('/user/{user}',[UserController::class, 'destroy'])->name('admin.users.destroy');
+});
+
+/* grupo de rutas para prestamos */
+Route::prefix('loan')->group(function () {
+    Route::get('/', [LoanController::class, 'index'])->name('loans.index');
+    Route::get('/create', [LoanController::class, 'create'])->name('loans.create');
+    Route::post('/store', [LoanController::class, 'store'])->name('loans.store');
+    Route::put('/{loan}', [LoanController::class, 'update'])->name('loans.update');
+    Route::get('/{loan}/edit', [LoanController::class, 'edit'])->name('loans.edit');
+    Route::delete('/{loan}', [LoanController::class, 'destroy'])->name('loans.destroy');
+    ///////////////////////////////////////////////////////////////////////////////////////
+    Route::get('/users-loan', [LoanController::class, 'usersLoan'])->name('loans.users_loan');
+    Route::get('/books-loan', [LoanController::class, 'booksLoan'])->name('loans.books_loan');
+    Route::post('add-book/{id}', [LoanController::class, 'addBook'])->name('loans.add_book');
+    Route::post('remove-book/{id}', [LoanController::class, 'removeBook'])->name('loans.remove_book');
+    Route::get('show-cart', [LoanController::class, 'showLoanSelected'])->name('loans.show_cart_loan');
+    Route::get('clean-loan', [LoanController::class, 'cleanBooks'])->name('loans.clean_loan');
 });

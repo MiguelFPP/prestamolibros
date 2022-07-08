@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -194,7 +193,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -247,13 +246,21 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
+            'key' => 'page',
+            'text'        => 'Carrito',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            'label'       => 1,
             'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
+        [
+            'text' => 'Iniciar Prestamo',
+            'route'  => 'loans.books_loan',
+            'active' => ['loan/*'],
+            'icon' => 'fas fa-truck-loading',
+            /* 'can' => 'users.index', */
+        ],
         [
             'text'    => 'Gestion de Libros',
             'icon'    => 'fas fa-book',

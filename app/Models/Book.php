@@ -22,4 +22,9 @@ class Book extends Model
     {
         return $this->belongsToMany(Category::class)->withTrashed('deleted_at');
     }
+
+    public function rentals()
+    {
+        return $this->belongsToMany(Rental::class);
+    }
 }
