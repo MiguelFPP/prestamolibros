@@ -46,4 +46,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
 }

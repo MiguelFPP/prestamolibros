@@ -7,30 +7,51 @@
 @stop
 
 @section('content')
-    @if (session('info'))
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
-                <use xlink:href="#check-circle-fill" />
-            </svg>
-            <div>
-                {{ session('info') }}
-            </div>
-        </div>
-    @endif
     {{-- table where list all auhtors --}}
     <div class="card">
         <div class="card-header">
-            @if (session('books'))
-                <a href="{{ route('loans.users_loan') }}" class="btn btn-success float-right">
-                    <i class="fas fa-user"></i>
-                    Seleccionar Usuario
-                </a>
-            @endif
-            <h3 class="box-title">Informacion de Seleccion</h3>
+            <a href="{{ route('loans.books_loan') }}" class="btn btn-success float-right">
+                <i class="fas fa-book"></i>
+                Seleccionar Libros
+            </a>
+            <h3 class="box-title">Prestamos para:
+                <span class="text-primary">{{ $user->name }}</span>
+            </h3>
         </div>
         <!-- /.box-header -->
         <div class="card-body">
             @if (session('books'))
+                <form action="{{route('loans.store')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    {{-- input date --}}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="date_start">Fecha de Prestamo</label>
+                                    <input type="date" name="date_start" id="date_start" class="form-control"
+                                        value="{{ date('Y-m-d') }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="date_end">Fecha de Devolucion</label>
+                                    <input type="date" name="date_end" id="date_end" class="form-control"
+                                        value="{{ date('Y-m-d', strtotime('+1 month')) }}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- button save --}}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            Iniciar Prestamo
+                        </button>
+                    </div>
+                </form>
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>

@@ -262,6 +262,13 @@ return [
             /* 'can' => 'users.index', */
         ],
         [
+            'text' => 'Historico Prestamo',
+            'route'  => 'history_loan.index',
+            'active' => ['history-loan/*'],
+            'icon' => 'fas fa-history',
+            /* 'can' => 'users.index', */
+        ],
+        [
             'text'    => 'Gestion de Libros',
             'icon'    => 'fas fa-book',
             'submenu' => [

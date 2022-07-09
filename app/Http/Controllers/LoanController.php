@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LoanBooksStartEvent;
+use App\Http\Requests\LoanRequest;
 use App\Models\Book;
+use App\Models\Loan;
 use App\Models\User;
+use App\Models\BookLoan;
 use Illuminate\Http\Request;
 
 class LoanController extends Controller
@@ -91,12 +95,22 @@ class LoanController extends Controller
         return back();
     }
 
+    /**
+     * It removes the books session variable
+     *
+     * @return the view of the books_loan.blade.php
+     */
     public function cleanBooks()
     {
         session()->forget('books');
         return redirect()->route('loans.books_loan');
     }
 
+    /**
+     * It gets the books from the session and returns them to the view
+     *
+     * @return The view loan_selected.blade.php
+     */
     public function showLoanSelected()
     {
         $books_cart = session()->get('books');
@@ -105,22 +119,56 @@ class LoanController extends Controller
     }
 
     /**
-     * It saves the loan in the database
+     * It creates a loan, then creates a book loan for each book in the cart
      *
-     * @param Request $request The request with the data of the loan.
+     * @param LoanRequest request The request object.
      *
-     * @return The user is being redirected to the previous page.
+     * @return It is being returned the view of the loan history.
      */
-    /* public function saveLoan(Request $request)
+    public function loanStore(LoanRequest $request)
     {
-        $books = session()->get('books');
-        $loan = new Loan();
-        $loan->user_id = $request->user_id;
-        $loan->save();
+        $books_cart = session()->get('books');
+        $books = Book::whereIn('id', array_keys($books_cart))->get();
+        $user = User::find($request->user_id);
+        /* Creating a new loan with the data from the request. */
+        $loan = Loan::create([
+            'date_start' => $request->date_start,
+            'date_end' => $request->date_end,
+            'status' => '0',
+            'user_id' => $user->id
+        ]);
+        /* Creating a book loan for each book in the cart. */
         foreach ($books as $book) {
-            $loan->books()->attach($book['id'], ['quantity' => $book['quantity']]);
+            BookLoan::create([
+                'loan_id' => $loan->id,
+                'book_id' => $book->id,
+                'quantity' => $books_cart[$book->id]['quantity']
+            ]);
         }
+        /* discount stock */
+        foreach ($books as $book) {
+            $book->stock = $book->stock - $books_cart[$book->id]['quantity'];
+            $book->save();
+        }
+
+        event(new LoanBooksStartEvent($books, $user, $request->date_end));
+
         session()->forget('books');
-        return back();
-    } */
+        return redirect()->route('history_loan.index')->with('success', 'Prestamo Iniciado');
+    }
+
+    /**
+     * It takes a user object as a parameter and returns a view with the books_cart, books and user
+     * variables
+     *
+     * @param User user The user that is currently logged in.
+     *
+     * @return The view loan.preview_loan is being returned.
+     */
+    public function previewLoan(User $user)
+    {
+        $books_cart = session()->get('books');
+        $books = Book::whereIn('id', array_keys($books_cart))->get();
+        return view('loan.preview_loan', compact('books_cart', 'books', 'user'));
+    }
 }

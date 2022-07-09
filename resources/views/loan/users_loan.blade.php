@@ -59,7 +59,7 @@
                                     @endforeach
                                 </td>
                                 <td class="d-flex justify-content-center">
-                                    <a href="{{ route('loans.books_loan', $user) }}" class="btn btn-warning">
+                                    <a href="{{ route('loans.preview', $user) }}" class="btn btn-warning">
                                         <i class="fab fa-leanpub"></i>
                                     </a>
                                 </td>
