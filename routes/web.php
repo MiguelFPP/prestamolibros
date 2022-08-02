@@ -83,6 +83,7 @@ Route::prefix('loan')->group(function () {
     Route::get('clean-loan', [LoanController::class, 'cleanBooks'])->name('loans.clean_loan');
     Route::get('preview/{user}', [LoanController::class, 'previewLoan'])->name('loans.preview');
     Route::post('store/', [LoanController::class, 'loanStore'])->name('loans.store');
+    Route::put('end/{loan}', [LoanController::class, 'loanEnd'])->name('loans.end');
 });
 
 Route::prefix('history-loan')->group(function () {
