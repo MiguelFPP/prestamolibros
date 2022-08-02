@@ -7,13 +7,13 @@
 @stop
 
 @section('content')
-    @if (session('info'))
+    @if (session('success'))
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
                 <use xlink:href="#check-circle-fill" />
             </svg>
             <div>
-                {{ session('info') }}
+                {{ session('success') }}
             </div>
         </div>
     @endif
@@ -38,14 +38,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($loans as $loan)
+                    @forelse ($loans as $loan)
                         <tr>
                             <td>{{ $loan->id }}</td>
                             <td>{{ $loan->user->name }}</td>
                             <td>{{ $loan->user->identification }}</td>
                             <td>{{ $loan->quantity }}</td>
-                            <td>{{ $loan->date_start }}</td>
-                            <td>{{ $loan->date_end }}</td>
+                            <td>{{ $loan->date_start->toFormattedDateString() }}</td>
+                            <td>
+                                @if ($loan->date_end > now())
+                                    <span class="badge badge-success">{{ $loan->date_end->toFormattedDateString() }}</span>
+                                @elseif ($loan->date_end == now())
+                                    <span class="badge badge-warning">{{ $loan->date_end->toFormattedDateString() }}</span>
+                                @else
+                                    <span class="badge badge-danger">{{ $loan->date_end->toFormattedDateString() }}</span>
+                                @endif
+                            </td>
                             <td>
                                 @if ($loan->status == 0)
                                     <span class="badge badge-warning">Activo</span>
@@ -56,10 +64,10 @@
                                 @endif
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a href="{{route('history_loan.show', $loan)}}" class="btn btn-primary">
+                                <a href="{{ route('history_loan.show', $loan) }}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <form action="{{-- {{ route('history_loan.destroy', $loan->id) }} --}}" method="POST" class="d-inline">
+                                <form action="{{ route('loans.end', $loan) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('PUT')
                                     <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>
@@ -67,7 +75,11 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">No hay prestamos</td>
+                        </tr>
+                    @endforelse
                 </tbody>
                 <tfoot>
                     <tr>
