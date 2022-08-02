@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\LoanBooksEndEvent;
 use App\Events\LoanBooksStartEvent;
+use App\Listeners\LoanBooksEndListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\LoanBooksStartListener;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
 
         LoanBooksStartEvent::class => [
             LoanBooksStartListener::class,
+        ],
+        LoanBooksEndEvent::class => [
+            LoanBooksEndListener::class
         ]
     ];
 

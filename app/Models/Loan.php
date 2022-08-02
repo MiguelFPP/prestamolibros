@@ -10,6 +10,7 @@ class Loan extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $dates = ['date_start', 'date_end'];
     protected $fillable = [
         'date_start',
         'date_end',
@@ -19,7 +20,7 @@ class Loan extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withOut('password');
     }
 
     public function book_loans()

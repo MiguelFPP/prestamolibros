@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\LoanBooksStartEvent;
-use App\Http\Requests\LoanRequest;
 use App\Models\Book;
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\BookLoan;
 use Illuminate\Http\Request;
+use App\Events\LoanBooksEndEvent;
+use App\Http\Requests\LoanRequest;
+use App\Events\LoanBooksStartEvent;
 
 class LoanController extends Controller
 {
@@ -170,5 +171,23 @@ class LoanController extends Controller
         $books_cart = session()->get('books');
         $books = Book::whereIn('id', array_keys($books_cart))->get();
         return view('loan.preview_loan', compact('books_cart', 'books', 'user'));
+    }
+
+    public function loanEnd(Loan $loan)
+    {
+        if ($loan->date_end > now()) {
+            $loan->status = '2';
+            $loan->save();
+        } else {
+            $loan->status = '1';
+            $loan->save();
+        }
+        $books = BookLoan::where('loan_id', $loan->id)->get();
+        foreach ($books as $book) {
+            $book->book->stock = $book->book->stock + $book->quantity;
+            $book->book->save();
+        }
+        event(new LoanBooksEndEvent($loan->user, $loan->date_start, $loan->date_end));
+        return redirect()->route('history_loan.index')->with('success', 'Prestamo Finalizado');
     }
 }
