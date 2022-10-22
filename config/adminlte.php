@@ -304,7 +304,8 @@ return [
         ],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'route'  => 'profile.index',
+            'active'=> ['profile*'],
             'icon' => 'fas fa-fw fa-user',
         ],
         [

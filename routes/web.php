@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
@@ -89,4 +90,9 @@ Route::prefix('loan')->group(function () {
 Route::prefix('history-loan')->group(function () {
     Route::get('/', [HistoryLoanController::class, 'index'])->name('history_loan.index');
     Route::get('/{loan}', [HistoryLoanController::class, 'show'])->name('history_loan.show');
+});
+
+/* profile user */
+Route::prefix('profile')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
 });
