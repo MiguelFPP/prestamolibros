@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthorController;
@@ -95,4 +96,11 @@ Route::prefix('history-loan')->group(function () {
 /* profile user */
 Route::prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+/* password user */
+Route::prefix('password')->group(function () {
+    Route::get('/', [PasswordController::class, 'index'])->name('password.index');
+    Route::post('/update', [PasswordController::class, 'update'])->name('password.update');
 });

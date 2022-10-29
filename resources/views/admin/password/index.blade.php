@@ -18,7 +18,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="box-title">Editar Perfil: {{$user->name}} {{$user->surname}}</h3>
+        <h3 class="box-title">Cambiar Contraseña</h3>
     </div>
     <div class="card-body">
         <form action="{{route('profile.update')}}" method="post">
@@ -26,8 +26,8 @@
             <div class="container">
                 <div class="row">
                     <div class="form-group col">
-                        <x-adminlte-input name="identification" label="Identificacion"
-                            placeholder="Identificacion del usuario" value="{{ $user->identification }}">
+                        <x-adminlte-input name="identification" label="Contraseña Actual"
+                            placeholder="Ingrese su contraseña actual" value="">
                             <x-slot name="prependSlot" class="@error('identification') is-invalid @enderror">
                                 <div class="input-group-text bg-dark">
                                     <i class="fas fa-id-card"></i>
@@ -42,8 +42,8 @@
                     </div>
 
                     <div class="form-group col">
-                        <x-adminlte-input name="name" label="Nombre" placeholder="Nombre del usuario"
-                            value="{{$user->name}}">
+                        <x-adminlte-input name="name" label="Contraseña Nueva" placeholder="Ingrese su nueva contraseña"
+                            value="">
                             <x-slot name="prependSlot" class="@error('name') is-invalid @enderror">
                                 <div class="input-group-text bg-dark">
                                     <i class="fas fa-signature"></i>
@@ -59,8 +59,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col">
-                        <x-adminlte-input name="surname" label="Apellido" placeholder="Apellido del usuario"
-                            value="{{$user->surname}}">
+                        <x-adminlte-input name="surname" label="Repita su contraseña" placeholder="Repita su nueva contraseña" value="">
                             <x-slot name="prependSlot" class="@error('surname') is-invalid @enderror">
                                 <div class="input-group-text bg-dark">
                                     <i class="fas fa-signature"></i>
@@ -73,23 +72,6 @@
                         </span>
                         @enderror
                     </div>
-
-                    <div class="form-group col">
-                        <x-adminlte-input name="email" label="Email" placeholder="Email del Usuario"
-                            value="{{ $user->email }}">
-                            <x-slot name="prependSlot" class="@error('email') is-invalid @enderror">
-                                <div class="input-group-text bg-dark">
-                                    <i class="fas fa-at"></i>
-                                </div>
-                            </x-slot>
-                        </x-adminlte-input>
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Actualizar</button>

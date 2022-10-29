@@ -310,7 +310,8 @@ return [
         ],
         [
             'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'route'  => 'password.index',
+            'active'=> ['password*'],
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
